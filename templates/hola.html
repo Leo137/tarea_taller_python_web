@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+    <head>
+        {% block head %}
+        <title>Hola {{current_user.username}}</title>
+        <meta charset="utf-8">
+        <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="//cdn.jsdelivr.net/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            console.log("asASDd");
+            $('#datePicker')
+                .datepicker({
+                    format: 'mm/dd/yyyy'
+                })
+                .on('changeDate', function(e) {
+                    // Revalidate the date field
+                    $('#eventForm').formValidation('revalidateField', 'date');
+                });
+
+            $('#eventForm').formValidation({
+                framework: 'bootstrap',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    name: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The name is required'
+                            }
+                        }
+                    },
+                    date: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The date is required'
+                            },
+                            date: {
+                                format: 'MM/DD/YYYY',
+                                message: 'The date is not a valid'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        </script>
+        {% endblock %}
+    </head>
+    <body>
+        {% block navbar %}
+            <div class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <a class="navbar-brand" href="{{ url_for('index') }}">Sistema de reserva</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <ul class="nav navbar-nav">
+
+                          {% block navbar_active %}
+                          {% if current_user.is_admin() %}
+                              <li class="active"><a href="{{ url_for('index') }}">Inicio</a></li>
+                              <li><a href="{{ url_for('admin_hoteles') }}">Administrar hoteles</a></li>
+                              <li><a href="{{ url_for('user_create') }}">Administrar tipos de habitaciones</a></li>
+                              <li><a href="{{ url_for('user_create') }}">Administrar habitaciones</a></li>
+                              <li><a href="{{ url_for('user_create') }}">Administar reservas</a></li>
+                              <li><a href="{{ url_for('user_logout') }}">Logout</a></li>
+                          {% else %}
+                              <li class="active"><a href="{{ url_for('index') }}">Inicio</a></li>
+                              <li><a href="{{ url_for('reservar') }}">Reservar habitacion</a></li>
+                              <li><a href="{{ url_for('ver_reservas') }}">Ver mis reservas</a></li>
+                              <li><a href="{{ url_for('user_logout') }}">Logout</a></li>
+                          {% endif %}
+                          {% endblock %}
+                      </ul>
+                    </div><!-- /.navbar-collapse -->
+                  </div><!-- /.container-fluid -->
+              </div>
+        {% endblock %}
+
+            {% block content %}
+            <div class="container">
+                {% block main %}
+                    Hola, {{ current_user.nombre }}.
+                {% endblock %}
+            </div>
+            {% endblock %}
+
+        <!--<img src="{{ url_for('static', filename='que_picardia.jpeg') }}" alt="Que Picardía">-->
+
+    </body>
+</html>

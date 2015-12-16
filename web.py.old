@@ -1,0 +1,25 @@
+#encoding:utf-8
+from random import sample
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+@app.route('/(<name>')
+def hola_con_nombre(name='Mundo'):
+    return render_template('hola.html',nombre=name)
+
+@app.route('/<greet>/<name>')
+def hola_personalizado(greet, name):
+    return render_template('hola_personalizado.html',saludo_personalizado=greet,nombre=name)
+    return u'{}, {}'.format(greet, name)
+
+@app.route('/kino')
+def kino():
+    lista_numeros = sorted(sample(range(1,26),14))
+    return render_template('kino.html',numeros_ganadores=lista_numeros)
+
+
+
+if __name__ == '__main__':
+    app.run(host='localhost', port=1337, debug=True)

@@ -1,0 +1,11 @@
+{% extends "hola.html" %}
+
+{% block saludo %}
+    <ul>
+        {% for numero in numeros_ganadores %}
+            <li>
+                Número {{ loop.index }}: {{ numero }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

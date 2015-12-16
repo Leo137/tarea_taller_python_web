@@ -1,0 +1,11 @@
+{% extends "hola.html" %}
+
+{% block main %}
+    <h3>Usuario: {{ username }} creado con éxito</h3>
+    <a href="{{ url_for('user_login') }}">Ir al Login</a>
+{% endblock %}
+
+{% block navbar_active %}
+<li><a href="{{ url_for('user_login') }}">Login</a></li>
+<li class="active"><a href="{{ url_for('user_create') }}">Crear Cuenta</a></li>
+{% endblock %}

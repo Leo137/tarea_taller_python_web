@@ -1,0 +1,77 @@
+{% extends "hola.html" %}
+
+<style type="text/css">
+/**
+ * Override feedback icon position
+ * See http://formvalidation.io/examples/adjusting-feedback-icon-position/
+ */
+#eventForm .form-control-feedback {
+    top: 0;
+    right: -15px;
+}
+</style>
+
+{% block main %}
+    <h2>Reservar Habitacion</h2>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{ error }}
+    </div>
+    {% endif %}
+    {% for field in form %}
+        {% for error_field in field.errors %}
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{ field.label}} : {{ error_field }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <form id="eventForm" method="POST">
+        {% for field in form %}
+            {% if field.name == 'submit' %}
+                <button type="submit" class="btn btn-default">{{field.label}}</div>
+            {% elif field.name == 'fechaPedido' %}
+            <div class="row">
+            <div class="form-group col-xs-6">
+                <label class="control-label">{{field.label}}</label>
+                <div class="date">
+                <div class="input-group input-append date" id="datePicker" data-fv-field="date">
+                <input type="text" class="form-control" name="fechaPedido" />
+                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                </div>
+            </div>
+            </div>
+            {% elif field.name != 'csrf_token' %}
+            <div class="row">
+            <div class="form-group col-xs-6">
+                <label>{{field.label}}</label>
+                {{field(class="form-control")}}
+            </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        {{ form.csrf_token }}
+    </form>
+{% endblock %}
+
+{% block navbar_active %}
+{% if current_user.is_admin() %}
+    <li class="active"><a href="{{ url_for('index') }}">Inicio</a></li>
+    <li><a href="{{ url_for('admin_hoteles') }}">Administrar hoteles</a></li>
+    <li><a href="{{ url_for('user_create') }}">Administrar tipos de habitaciones</a></li>
+    <li><a href="{{ url_for('user_create') }}">Administrar habitaciones</a></li>
+    <li><a href="{{ url_for('user_create') }}">Administar reservas</a></li>
+    <li><a href="{{ url_for('user_logout') }}">Logout</a></li>
+{% else %}
+    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+    <li class="active"><a href="{{ url_for('reservar') }}">Reservar habitacion</a></li>
+    <li><a href="{{ url_for('ver_reservas') }}">Ver mis reservas</a></li>
+    <li><a href="{{ url_for('user_logout') }}">Logout</a></li>
+{% endif %}
+{% endblock %}
