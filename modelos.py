@@ -59,7 +59,6 @@ class Reserva(BaseModel):
     habitacion = peewee.ForeignKeyField(Habitacion, related_name='reservas')
     cancelado = peewee.BooleanField(default=False)
     class Meta:
-        primary_key = peewee.CompositeKey('cliente','habitacion')
         database = db
 
 if __name__ == '__main__':

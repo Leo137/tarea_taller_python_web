@@ -1,6 +1,6 @@
 {% extends "hola.html" %}
 {% block main %}
-    <h2>Administracion Hoteles</h2>
+    <h2>Administracion de habitaciones</h2>
     {% if error %}
     <div class="alert alert-danger" role="alert">
         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -19,40 +19,40 @@
         {% endfor %}
     {% endfor %}
     {% endif %}
-    <h3>Lista Hoteles</h2>
+    <h3>Lista de Habitaciones</h2>
     <div class="row">
         <div class="col-xs-3">
-            Nombre
+            Numero de Habitacion
         </div>
         <div class="col-xs-2">
-            Region
+            Piso
         </div>
         <div class="col-xs-2">
-            Ciudad
+            Tipo Habitacion
         </div>
         <div class="col-xs-3">
-            Direccion
+            Hotel
         </div>
         <div class="form-group col-xs-2">
         </div>
     </div>
-    {% for hotel in hoteles %}
+    {% for habitacion in habitaciones %}
     <div class="row">
         <div class="col-xs-3">
-            {{ hotel.nombre }}
+            {{ habitacion.numeroHabitacion }}
         </div>
         <div class="col-xs-2">
-            {{ hotel.region }}
+            {{ habitacion.piso }}
         </div>
         <div class="col-xs-2">
-            {{ hotel.ciudad }}
+            {{ habitacion.tipoHabitacion }}
         </div>
         <div class="col-xs-3">
-            {{ hotel.direccion }}
+            {{ habitacion.hotel }}
         </div>
         <div class="form-group col-xs-2">
             <!-- <form method="POST">
-                {% for field in hotel.form %}
+                {% for field in habitacion.form %}
                     {% if field.name == 'submit' %}
                         <button type="submit" class="btn btn-default">{{field.label}}</button>
                     {% elif field.name == 'fechaPedido' %}
@@ -81,23 +81,11 @@
         </div>
     </div>
     {% endfor %}
-    <h3>Crear nuevo hotel</h2>
+    <h3>Crear nueva habitacion</h2>
     <form id="eventForm" method="POST">
         {% for field in form %}
             {% if field.name == 'submit' %}
                 <button type="submit" class="btn btn-default">{{field.label}}</button>
-            {% elif field.name == 'fechaPedido' %}
-            <div class="row">
-            <div class="form-group col-xs-6">
-                <label class="control-label">{{field.label}}</label>
-                <div class="date">
-                <div class="input-group input-append date" id="datePicker" data-fv-field="date">
-                <input type="text" class="form-control" name="fechaPedido" />
-                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div>
-                </div>
-            </div>
-            </div>
             {% elif field.name != 'csrf_token' %}
             <div class="row">
             <div class="form-group col-xs-6">
@@ -114,9 +102,9 @@
 {% block navbar_active %}
 {% if current_user.is_admin() %}
     <li><a href="{{ url_for('index') }}">Inicio</a></li>
-    <li class="active"><a href="{{ url_for('admin_hoteles') }}">Administrar hoteles</a></li>
+    <li><a href="{{ url_for('admin_hoteles') }}">Administrar hoteles</a></li>
     <li><a href="{{ url_for('admin_tipos_habitacion') }}">Administrar tipos de habitaciones</a></li>
-    <li><a href="{{ url_for('admin_habitaciones') }}">Administrar habitaciones</a></li>
+    <li class="active"><a href="{{ url_for('admin_habitaciones') }}">Administrar habitaciones</a></li>
     <li><a href="{{ url_for('admin_reservas') }}">Administar reservas</a></li>
     <li><a href="{{ url_for('user_logout') }}">Logout</a></li>
 {% else %}

@@ -1,0 +1,92 @@
+{% extends "hola.html" %}
+{% block main %}
+    <h2>Administracion de reservas</h2>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{ error }}
+    </div>
+    {% endif %}
+    <h3>Lista de reservas (pendientes)</h2>
+    <div class="row">
+        <div class="col-xs-2">
+            Numero habitacion
+        </div>
+        <div class="col-xs-2">
+            Fecha de pedido
+        </div>
+        <div class="col-xs-1">
+            Numero de dias
+        </div>
+        <div class="col-xs-1">
+            Cliente
+        </div>
+        <div class="col-xs-1">
+            Hotel
+        </div>
+        <div class="form-group col-xs-2">
+        </div>
+        <div class="form-group col-xs-2">
+        </div>
+    </div>
+    {% for reserva in reservas %}
+    <div class="row">
+        <div class="col-xs-2">
+            {{ reserva.numeroHabitacion }}
+        </div>
+        <div class="col-xs-2">
+            {{ reserva.fechaPedido }}
+        </div>
+        <div class="col-xs-1">
+            {{ reserva.numeroDias }}
+        </div>
+        <div class="col-xs-1">
+            {{ reserva.nombreCliente }}
+        </div>
+        <div class="col-xs-1">
+            {{ reserva.nombreHotel }}
+        </div>
+        <div class="form-group col-xs-2">
+            <form action="{{ url_for('admin_reservas_accept') }}" method="POST">
+                {% for field in reserva.forma %}
+                    {% if field.name == 'submit' %}
+                        <button type="submit" class="btn btn-default">{{field.label}}</button>
+                    {% else %}
+                        {{field}}
+                    {% endif %}
+                {% endfor %}
+                {{ reserva.forma.csrf_token }}
+            </form>
+        </div>
+        <div class="form-group col-xs-2">
+            <form action="{{ url_for('admin_reservas_delete') }}" method="POST">
+                {% for field in reserva.formd %}
+                    {% if field.name == 'submit' %}
+                        <button type="submit" class="btn btn-default">{{field.label}}</button>
+                    {% else %}
+                        {{field}}
+                    {% endif %}
+                {% endfor %}
+                {{ reserva.formd.csrf_token }}
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}
+
+{% block navbar_active %}
+{% if current_user.is_admin() %}
+    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+    <li><a href="{{ url_for('admin_hoteles') }}">Administrar hoteles</a></li>
+    <li><a href="{{ url_for('admin_tipos_habitacion') }}">Administrar tipos de habitaciones</a></li>
+    <li><a href="{{ url_for('admin_habitaciones') }}">Administrar habitaciones</a></li>
+    <li class="active"><a href="{{ url_for('admin_reservas') }}">Administar reservas</a></li>
+    <li><a href="{{ url_for('user_logout') }}">Logout</a></li>
+{% else %}
+    <li><a href="{{ url_for('index') }}">Inicio</a></li>
+    <li><a href="{{ url_for('reservar') }}">Reservar habitacion</a></li>
+    <li class="active"><a href="{{ url_for('ver_reservas') }}">Ver mis reservas</a></li>
+    <li><a href="{{ url_for('user_logout') }}">Logout</a></li>
+{% endif %}
+{% endblock %}

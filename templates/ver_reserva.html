@@ -60,32 +60,15 @@
             {% endif %}
         </div>
         <div class="form-group col-xs-2">
-            <form id="eventForm" method="POST">
-                {% for field in form %}
+            <form action="{{ url_for('reserva_delete') }}" id="eventForm" method="POST">
+                {% for field in reserva.form %}
                     {% if field.name == 'submit' %}
-                        <button type="submit" class="btn btn-default">{{field.label}}</div>
-                    {% elif field.name == 'fechaPedido' %}
-                    <div class="row">
-                    <div class="form-group col-xs-6">
-                        <label class="control-label">{{field.label}}</label>
-                        <div class="date">
-                        <div class="input-group input-append date" id="datePicker" data-fv-field="date">
-                        <input type="text" class="form-control" name="fechaPedido" />
-                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
+                        <button type="submit" class="btn btn-default">{{field.label}}</button>
                     {% elif field.name != 'csrf_token' %}
-                    <div class="row">
-                    <div class="form-group col-xs-6">
-                        <label>{{field.label}}</label>
-                        {{field(class="form-control")}}
-                    </div>
-                    </div>
+                        {{ field }}
                     {% endif %}
                 {% endfor %}
-                {{ form.csrf_token }}
+                {{ reserva.form.csrf_token }}
             </form>
         </div>
     </div>
