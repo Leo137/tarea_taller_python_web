@@ -1,0 +1,70 @@
+Tarea Taller Desarrollo Web en Python
+
+Leonardo Santis Arenas 201073547-8
+
+Sistema de Reserva de hoteles
+
+-- librerias y extensiones utilizadas --
+
+dominate (2.1.16)
+Flask (0.10.1)
+Flask-Bootstrap (3.3.5.7)
+Flask-Login (0.3.2)
+Flask-WTF (0.12)
+itsdangerous (0.24)
+Jinja2 (2.8)
+MarkupSafe (0.23)
+peewee (2.6.4)
+pip (7.1.2)
+setuptools (18.2)
+visitor (0.1.2)
+Werkzeug (0.10.4)
+wheel (0.24.0)
+WTForms (2.0.2)
+
+-- uso del sistema --
+
+python web.py
+
+-- creacion del modelo --
+
+python modelos.py
+
+-- logins de prueba --
+
+usuario administrador:
+
+username:admin
+password:admin
+
+usuario cliente:
+
+username:usuario
+password:usuario
+
+-- resumen --
+
+El sistema permite a usuarios reservar y revisar el estado de sus reservas, para
+los administradores, estos pueden crear hoteles, tipos de habitacion y habitaciones
+para que los usuarios los reserven.
+
+una habitacion tiene asociado un hotel y un Tipo de habitacion
+una reserva tiene asociado una habitacion y un cliente, en determinada fecha
+
+-- funcionalidades --
+
+- Login y Registro de Usuario
+- Modificacion de nombre de usuario
+- Eliminacion de usuario
+- Usuario registra una reserva
+- Usuario revisa sus reservas
+- Usuario elimina una reserva suya
+- Administrador crea un hotel
+- Administrador crea un tipo de habitacion
+- Administrador crea una habitacion
+- Administrador acepta o elimina una reserva pendiente
+
+-- notas --
+
+para que un usuario sea administrador, el campo administrador en la tabla cliente
+debe ser True (1).
